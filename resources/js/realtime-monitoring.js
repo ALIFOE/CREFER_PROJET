@@ -45,8 +45,14 @@ async function fetchRealtimeData() {
 
 // Fonction pour afficher le graphique
 async function renderRealtimeChart() {
+    const canvas = document.getElementById('realtimeChart');
+    if (!canvas) {
+        console.error("L'élément canvas 'realtimeChart' n'a pas été trouvé dans le DOM");
+        return;
+    }
+    
     const data = await fetchRealtimeData();
-    const ctx = document.getElementById('realtimeChart').getContext('2d');
+    const ctx = canvas.getContext('2d');
     new Chart(ctx, {
         type: 'line',
         data: {

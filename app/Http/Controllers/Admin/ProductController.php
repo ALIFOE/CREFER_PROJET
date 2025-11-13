@@ -40,15 +40,28 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/products', 'public');
-            if (!$path) {
-                return back()->withErrors(['image' => 'Impossible de sauvegarder l\'image. Vérifiez les permissions du dossier storage.']);
-            }
-            $validatedData['image'] = $path;
-            
-            // Vérifier que le fichier a bien été créé
-            if (!Storage::disk('public')->exists($path)) {
-                return back()->withErrors(['image' => 'L\'image n\'a pas pu être sauvegardée correctement.']);
+            try {
+                $file = $request->file('image');
+                $path = $file->store('images/products', 'public');
+                
+                if (!$path) {
+                    return back()->withErrors(['image' => 'Impossible de sauvegarder l\'image. Vérifiez les permissions du dossier storage.']);
+                }
+
+                // S'assurer que le dossier existe
+                $storage_path = storage_path('app/public/images/products');
+                if (!file_exists($storage_path)) {
+                    mkdir($storage_path, 0755, true);
+                }
+
+                // Vérifier que le fichier a bien été créé
+                if (!Storage::disk('public')->exists($path)) {
+                    return back()->withErrors(['image' => 'L\'image n\'a pas pu être sauvegardée correctement.']);
+                }
+
+                $validatedData['image'] = $path;
+            } catch (\Exception $e) {
+                return back()->withErrors(['image' => 'Erreur lors de la sauvegarde de l\'image: ' . $e->getMessage()]);
             }
         }
 

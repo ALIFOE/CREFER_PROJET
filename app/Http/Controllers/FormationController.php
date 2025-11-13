@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use App\Events\FormationInscriptionCreated;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
+
 class FormationController extends Controller
 {
     public function __construct()
@@ -135,7 +138,11 @@ class FormationController extends Controller
         }
 
         $path = storage_path('app/public/' . $formation->flyer);
-        return response()->download($path);
+        
+        return response()->file($path, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . basename($formation->flyer) . '"'
+        ]);
     }    public function downloadDocument(FormationInscription $inscription, $type)
     {
         // Vérifier que l'utilisateur est authentifié et autorisé

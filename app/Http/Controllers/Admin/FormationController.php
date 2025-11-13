@@ -7,6 +7,7 @@ use App\Models\Formation;
 use App\Models\FormationInscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class FormationController extends Controller
 {
@@ -157,6 +158,11 @@ class FormationController extends Controller
             abort(404, 'Le flyer demandé n\'existe pas.');
         }
 
-        return response()->download(storage_path('app/public/' . $formation->flyer));
+        $path = storage_path('app/public/' . $formation->flyer);
+        
+        return response()->file($path, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . basename($formation->flyer) . '"'
+        ]);
     }
 }
