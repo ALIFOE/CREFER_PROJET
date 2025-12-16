@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CREFER - Formations et Gestion d'installations solaires photovoltaïques</title>
+        <title>CREFER - Plateforme de Gestion des Formations et des Étudiants</title>
         <!-- Charger d'abord Font Awesome -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -138,8 +138,8 @@
     <section class="hero-section relative flex items-center">
         <div class="container mx-auto px-6 z-10 text-center md:text-left">
             <div class="md:w-2/3">
-                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight hero-text">Optez pour la durabilité et meilleure performance de vos installations solaires</h1>
-                <p class="mt-4 text-xl text-gray-200 hero-description">Suivi en temps réel, analyses avancées et maintenance prédictive pour maximiser votre production d'énergie photovoltaïque.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight hero-text">Transformez l'éducation avec une gestion intelligente des formations</h1>
+                <p class="mt-4 text-xl text-gray-200 hero-description">Suivi pédagogique en temps réel, gestion des inscriptions et analyse de performance pour maximiser la réussite de vos étudiants.</p>
                 <div class="mt-8 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center md:justify-start">
                     @auth
                         <a href="{{ route('dashboard') }}" class="btn-primary text-center py-3 px-6 rounded-md text-lg font-medium hover:bg-blue-700">Accéder au tableau de bord</a>
@@ -157,7 +157,7 @@
             <div class="content-section">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-gray-800 section-title">Pourquoi choisir CREFER ?</h2>
-                    <p class="mt-4 text-xl text-gray-600 section-description">Une solution complète pour optimiser vos installations photovoltaïques</p>
+                    <p class="mt-4 text-xl text-gray-600 section-description">Une solution complète pour optimiser la gestion de vos formations et étudiants</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -166,23 +166,23 @@
                             <i class="fas fa-chart-line feature-icon"></i>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Suivi en temps réel</h3>
-                        <p class="text-gray-600 feature-text">Visualisez la production de vos panneaux solaires en direct et accédez à des statistiques détaillées.</p>
+                        <p class="text-gray-600 feature-text">Visualisez la progression de vos étudiants et accédez à des statistiques détaillées sur les formations.</p>
                     </div>
                     
                     <div class="card bg-white p-8 text-center">
                         <div class="mb-4">
                             <i class="fas fa-tools feature-icon"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Maintenance prédictive</h3>
-                        <p class="text-gray-600 feature-text">Détectez les anomalies avant qu'elles n'impactent votre production et planifiez les interventions.</p>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Gestion pédagogique</h3>
+                        <p class="text-gray-600 feature-text">Organisez les cours, gérez les inscriptions et suivez l'assiduité pour une meilleure efficacité pédagogique.</p>
                     </div>
                     
                     <div class="card bg-white p-8 text-center">
                         <div class="mb-4">
                             <i class="fas fa-sun feature-icon"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Prévisions météo</h3>
-                        <p class="text-gray-600 feature-text">Anticipez votre production grâce à l'intégration des données météorologiques locales.</p>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Analyses détaillées</h3>
+                        <p class="text-gray-600 feature-text">Obtenez des rapports complets sur la réussite des formations et les performances de vos étudiants.</p>
                     </div>
                 </div>
             </div>
@@ -194,80 +194,80 @@
             <div class="content-section">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-gray-800 section-title">Fonctionnalités adaptées à chaque profil</h2>
-                    <p class="mt-4 text-xl text-gray-600 section-description">Une solution polyvalente pour tous les acteurs du photovoltaïque</p>
+                    <p class="mt-4 text-xl text-gray-600 section-description">Une solution polyvalente pour tous les acteurs du secteur éducatif</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="card bg-white">
                         <div class="p-6 solar-gradient">
-                            <h3 class="text-2xl font-bold text-white">Client</h3>
+                            <h3 class="text-2xl font-bold text-white">Étudiant</h3>
                         </div>
                         <div class="p-6">
                             <ul class="space-y-3">
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Suivi de production en temps réel</span>
+                                    <span>Suivi de vos formations</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Comparaison avec prévisions météo</span>
+                                    <span>Consultation des cours</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Statistiques de rendement</span>
+                                    <span>Mes inscriptions</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Tableau de bord personnalisé</span>
+                                    <span>Tableau de bord personnel</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Alertes et notifications</span>
+                                    <span>Accès aux ressources</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Rapports téléchargeables</span>
+                                    <span>Téléchargement de certificats</span>
                                 </li>
                             </ul>
                             <div class="mt-6">
-                                <a href="{{ route('register') }}?role=client" class="btn-primary block text-center">Devenir client</a>
+                                <a href="{{ route('register') }}" class="btn-primary block text-center">S'inscrire</a>
                             </div>
                         </div>
                     </div>
                     
                     <div class="card bg-white">
                         <div class="p-6 solar-gradient">
-                            <h3 class="text-2xl font-bold text-white">Technicien</h3>
+                            <h3 class="text-2xl font-bold text-white">Formateur</h3>
                         </div>
                         <div class="p-6">
                             <ul class="space-y-3">
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Gestion des installations</span>
+                                    <span>Gestion des cours et contenus</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Suivi de performance</span>
+                                    <span>Suivi des étudiants</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Détection d'anomalies</span>
+                                    <span>Gestion des présences</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Calendrier des interventions</span>
+                                    <span>Évaluation des performances</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Recommandations d'optimisation</span>
+                                    <span>Communications avec étudiants</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Historique des maintenances</span>
+                                    <span>Générations de rapports</span>
                                 </li>
                             </ul>
                             <div class="mt-6">
-                                <a href="{{ route('register') }}?role=technicien" class="btn-primary block text-center">Devenir technicien</a>
+                                <a href="{{ route('contact') }}" class="btn-primary block text-center">Nous contacter</a>
                             </div>
                         </div>
                     </div>
@@ -288,7 +288,7 @@
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Suivi de toutes les installations</span>
+                                    <span>Gestion des formations</span>
                                 </li>
                                 <li class="flex items-center">
                                     <i class="fas fa-check text-green-500 mr-2"></i>
@@ -311,60 +311,12 @@
                 </div>
             </div>
         </div>
-    </section>    <section class="py-12 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800">Galerie</h2>
-                @auth
-                    <p class="mt-4 text-xl text-gray-600">Découvrez nos réalisations en images et en vidéos</p>
-                    <div class="mt-8">
-                        <a href="{{ route('gallery') }}" class="bg-orange-500 text-white py-3 px-8 rounded-md text-lg font-medium hover:bg-orange-600 transition duration-300 inline-flex items-center">
-                            <i class="fas fa-images mr-2"></i>
-                            Voir la galerie complète
-                        </a>
-                        @if (Auth::user()->is_admin)
-                            <a href="{{ route('admin.gallery.manage') }}" class="ml-4 bg-blue-500 text-white py-3 px-8 rounded-md text-lg font-medium hover:bg-blue-600 transition duration-300 inline-flex items-center">
-                                <i class="fas fa-cog mr-2"></i>
-                                Gérer la galerie
-                            </a>
-                        @endif
-                    </div>
-                    
-                    @if(!empty($featuredMedia))
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                            @foreach($featuredMedia as $media)
-                                <div class="card bg-white overflow-hidden">
-                                    <div class="relative aspect-w-16 aspect-h-9">
-                                        @if($media->type === 'image')
-                                            <img src="{{ asset('storage/' . $media->path) }}" alt="{{ $media->title }}" class="object-cover w-full h-full">
-                                        @else
-                                            <video src="{{ asset('storage/' . $media->path) }}" class="object-cover w-full h-full" controls></video>
-                                        @endif
-                                    </div>
-                                    <div class="p-4">
-                                        <h3 class="text-lg font-semibold text-gray-800">{{ $media->title }}</h3>
-                                        <p class="text-sm text-gray-600">{{ $media->description }}</p>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                @else
-                    <p class="mt-4 text-xl text-gray-600">Découvrez nos réalisations en images, accessibles à tous !</p>
-                    <p class="text-gray-500 mb-4">Parcourez notre galerie pour explorer les projets et installations réalisés par notre équipe.</p>
-                    <a href="{{ route('gallery') }}" class="bg-orange-500 text-white py-3 px-8 rounded-md text-lg font-medium hover:bg-orange-600 transition duration-300 inline-flex items-center">
-                        <i class="fas fa-images mr-2"></i>
-                        Voir la galerie
-                    </a>
-                @endauth
-            </div>
-        </div>
     </section>
 
     <section class="py-16 bg-gray-100">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800">Témoignages de nos clients</h2>
+                <h2 class="text-3xl font-bold text-gray-800">Témoignages de nos utilisateurs</h2>
                 <p class="mt-4 text-xl text-gray-600">Ce que nos utilisateurs disent de CREFER</p>
             </div>
             
@@ -379,12 +331,12 @@
                             <i class="fas fa-star"></i>
                         </div>
                     </div>
-                    <p class="text-gray-600 italic">"Grâce à CREFER, j'ai augmenté le rendement de mon installation de 15% en détectant rapidement des panneaux défectueux. L'interface est intuitive et les graphiques sont très clairs."</p>
+                    <p class="text-gray-600 italic">"Grâce à CREFER, la gestion de mes formations a devenu beaucoup plus simple. Je peux suivre facilement la progression de chaque étudiant et générer des rapports détaillés en quelques clics."</p>
                     <div class="mt-6 flex items-center">
                         <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xl font-bold">JD</div>
                         <div class="ml-4">
                             <p class="font-semibold">AFANKOUDTCHE Jean</p>
-                            <p class="text-sm text-gray-500">Professeur Enseignant</p>
+                            <p class="text-sm text-gray-500">Formateur Principal</p>
                         </div>
                     </div>
                 </div>
@@ -399,12 +351,12 @@
                             <i class="fas fa-star"></i>
                         </div>
                     </div>
-                    <p class="text-gray-600 italic">"En tant que technicienne, cette plateforme a révolutionné ma façon de travailler. Les alertes automatiques me permettent d'intervenir avant même que le client ne remarque un problème."</p>
+                    <p class="text-gray-600 italic">"En tant que coordinatrice, CREFER me permet de gérer efficacement plusieurs formations en parallèle. Les alertes et notifications me tiennent informée de chaque événement important."</p>
                     <div class="mt-6 flex items-center">
                         <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xl font-bold">ML</div>
                         <div class="ml-4">
                             <p class="font-semibold">Justine DJESSOU</p>
-                            <p class="text-sm text-gray-500">Docteur en Biotechnologie Humaine</p>
+                            <p class="text-sm text-gray-500">Coordinatrice Pédagogique</p>
                         </div>
                     </div>
                 </div>
@@ -419,12 +371,12 @@
                             <i class="fas fa-star-half-alt"></i>
                         </div>
                     </div>
-                    <p class="text-gray-600 italic">"Notre entreprise gère plus de 50 installations et CREFER nous a permis de centraliser toutes les données. Les rapports automatiques nous font gagner un temps précieux."</p>
+                    <p class="text-gray-600 italic">"Notre établissement gère plus de 20 formations et CREFER nous a permis de centraliser toutes les données. Les tableaux de bord et rapports automatiques nous font gagner un temps précieux."</p>
                     <div class="mt-6 flex items-center">
                         <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xl font-bold">PG</div>
                         <div class="ml-4">
                             <p class="font-semibold">Dorian AHONDO</p>
-                            <p class="text-sm text-gray-500">Atiste peintre et plâtrier</p>
+                            <p class="text-sm text-gray-500">Directeur Pédagogique</p>
                         </div>
                     </div>
                 </div>
@@ -432,11 +384,11 @@
         </div>
     </section>
 
-    <section class="py-16 bg-orange-400 text-white">
+    <section class="py-16 bg-blue-600 text-white">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-6">Prêt à optimiser vos installations solaires ?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Rejoignez les milliers d'utilisateurs qui font confiance à CREFER pour maximiser la rentabilité de leurs panneaux photovoltaïques.</p>
-            <a href="{{ route('register') }}" class="bg-white text-orange-500 py-3 px-8 rounded-md text-lg font-medium hover:bg-gray-100 transition duration-300">Créer un compte gratuitement</a>
+            <h2 class="text-3xl font-bold mb-6">Prêt à optimiser la gestion de vos formations ?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Rejoignez les établissements qui font confiance à CREFER pour améliorer la qualité pédagogique et simplifier la gestion de leurs formations.</p>
+            <a href="{{ route('register') }}" class="bg-white text-blue-600 py-3 px-8 rounded-md text-lg font-medium hover:bg-gray-100 transition duration-300">Créer un compte gratuitement</a>
         </div>
     </section>
 

@@ -12,21 +12,6 @@
                 <!-- Navigation Items (centré) -->
                 <div class="flex-1 flex justify-center">
                     <div class="flex space-x-6">
-                        <!-- Devis -->
-                        <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                            <button @click.prevent.stop="open = !open" class="navbar-link flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-yellow-100 transition relative">
-                                <i class="fas fa-file-invoice-dollar mr-2"></i> Devis
-                                @if(isset($devisCount) && $devisCount > 0)
-                                    <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">{{ $devisCount }}</span>
-                                @endif
-                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                            </button>
-                            <div x-show="open" @click.away="open = false" x-transition class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-                                <a href="{{ route('admin.devis.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50">
-                                    <i class="fas fa-list mr-2"></i>Liste des devis
-                                </a>
-                            </div>
-                        </div>
                         <!-- Formations -->
                         <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                             <button @click.prevent.stop="open = !open" class="navbar-link flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-yellow-100 transition relative">

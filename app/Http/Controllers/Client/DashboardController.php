@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Dimensionnement;
+use App\Models\Student;
+use App\Models\Course;
 use App\Models\LogActivite;
 use App\Models\Utilisateur;
 use Illuminate\Contracts\View\View;
@@ -32,67 +33,93 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        // Récupérer les dimensionnements récents
-        $dimensionnements = $user->dimensionnements()
-            ->latest()
-            ->take(5)
-            ->get();
+        try {
+            // Récupérer les cours récents
+            $courses = Course::orderBy('created_at', 'desc')
+                ->take(5)
+                ->get();
 
-        // Récupérer les onduleurs connectés
-        $onduleurs = $user->onduleurs()
-            ->where('est_connecte', true)
-            ->get();
+            // Récupérer les étudiants actifs
+            $students = Student::where('status', 'active')
+                ->take(10)
+                ->get();
 
-        // Récupérer les données de performances
-        $performanceData = [];
-        foreach ($onduleurs as $onduleur) {
-            $donneeRecente = $onduleur->donneesProduction()
-                ->latest('date_heure')
-                ->first();
+            // Statistiques d'étudiants
+            $studentStats = [
+                'total' => Student::count(),
+                'active' => Student::where('status', 'active')->count(),
+                'graduated' => Student::where('status', 'graduated')->count(),
+                'inactive' => Student::where('status', 'inactive')->count(),
+            ];
 
-            $performanceData[$onduleur->id] = [
-                'production_actuelle' => $donneeRecente ? $donneeRecente->puissance_instantanee : 0,
-                'production_journaliere' => $onduleur->donneesProduction()
-                    ->whereDate('date_heure', today())
-                    ->sum('energie_produite'),
-                'rendement' => $donneeRecente ? ($donneeRecente->puissance_instantanee / $onduleur->puissance_nominale * 100) : 0,
+            // Statistiques de cours
+            $courseStats = [
+                'total' => Course::count(),
+                'active' => Course::where('status', 'active')->count(),
+                'upcoming' => Course::where('status', 'upcoming')->count(),
+                'completed' => Course::where('status', 'completed')->count(),
+            ];
+        } catch (\Exception $e) {
+            // Si les tables n'existent pas encore, fournir des données par défaut
+            $courses = collect([]);
+            $students = collect([]);
+            $studentStats = [
+                'total' => 0,
+                'active' => 0,
+                'graduated' => 0,
+                'inactive' => 0,
+            ];
+            $courseStats = [
+                'total' => 0,
+                'active' => 0,
+                'upcoming' => 0,
+                'completed' => 0,
             ];
         }
 
         // Filtrage des activités
-        $activitesQuery = LogActivite::where('user_id', $user->id);
+        try {
+            $activitesQuery = LogActivite::where('user_id', $user->id);
 
-        if ($request->has('action')) {
-            $activitesQuery->where('action', $request->action);
-        }
-
-        if ($request->has('date')) {
-            switch ($request->date) {
-                case 'aujourd\'hui':
-                    $activitesQuery->whereDate('created_at', today());
-                    break;
-                case 'semaine':
-                    $activitesQuery->where('created_at', '>=', now()->startOfWeek());
-                    break;
-                case 'mois':
-                    $activitesQuery->where('created_at', '>=', now()->startOfMonth());
-                    break;
+            if ($request->has('action')) {
+                $activitesQuery->where('action', $request->action);
             }
-        }
 
-        $activites = $activitesQuery->latest()->paginate(10);
+            if ($request->has('date')) {
+                switch ($request->date) {
+                    case 'aujourd\'hui':
+                        $activitesQuery->whereDate('created_at', today());
+                        break;
+                    case 'semaine':
+                        $activitesQuery->where('created_at', '>=', now()->startOfWeek());
+                        break;
+                    case 'mois':
+                        $activitesQuery->where('created_at', '>=', now()->startOfMonth());
+                        break;
+                }
+            }
+
+            $activites = $activitesQuery->latest()->paginate(10);
+        } catch (\Exception $e) {
+            $activites = collect([]);
+        }
 
         // Récupérer les notifications non lues
-        $notifications = $user->notifications()
-            ->whereNull('read_at')
-            ->latest()
-            ->take(5)
-            ->get();
+        try {
+            $notifications = $user->notifications()
+                ->whereNull('read_at')
+                ->latest()
+                ->take(5)
+                ->get();
+        } catch (\Exception $e) {
+            $notifications = collect([]);
+        }
 
         return view('dashboard', compact(
-            'dimensionnements',
-            'onduleurs',
-            'performanceData',
+            'courses',
+            'students',
+            'studentStats',
+            'courseStats',
             'activites',
             'notifications'
         ));

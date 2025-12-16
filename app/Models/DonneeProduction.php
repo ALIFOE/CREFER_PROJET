@@ -11,7 +11,6 @@ class DonneeProduction extends Model
 
     protected $fillable = [
         'installation_id',
-        'onduleur_id',
         'date_heure',
         'puissance_instantanee',
         'energie_jour',
@@ -42,10 +41,5 @@ class DonneeProduction extends Model
     public function installation()
     {
         return $this->belongsTo(Installation::class);
-    }
-
-    public function onduleur()
-    {
-        return $this->belongsTo(Onduleur::class);
     }
 }

@@ -119,20 +119,6 @@
             <!-- Navigation Links -->
             <div class="hidden md:flex space-x-10">
                 <a href="{{ route('home') }}" class="navbar-link {{ request()->routeIs('home') ? 'active' : '' }}">Accueil</a>
-                <a href="{{ route('fonctionnalite') }}" class="navbar-link {{ request()->routeIs('fonctionnalite') ? 'active' : '' }}">Fonctionnalités</a>
-                <div class="relative" x-data="{ open: false }">
-                    <button @click="open = !open" class="navbar-link inline-flex items-center {{ request()->routeIs('services.*') || request()->routeIs('client.demandes-services.*') ? 'active' : '' }}">
-                        Services
-                        <i class="fas fa-chevron-down ml-2 text-sm"></i>
-                    </button>
-                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                        <a href="{{ route('services.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nos services</a>
-                        <a href="{{ route('client.demandes-services.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mes demandes</a>
-                        <a href="{{ route('ia-services') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            <i class="fas fa-robot mr-2"></i>Services IA
-                        </a>
-                    </div>
-                </div>
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" class="navbar-link inline-flex items-center {{ request()->routeIs('formation*') ? 'active' : '' }}">
                         Formations
@@ -141,17 +127,6 @@
                     <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                         <a href="{{ route('formation') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Formations à CREFER</a>
                         <a href="{{ route('formations.mes-inscriptions') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mes inscriptions</a>
-                    </div>
-                </div>
-                <a href="{{ route('installation') }}" class="navbar-link {{ request()->routeIs('installation') ? 'active' : '' }}">Devis</a>
-                <div class="relative" x-data="{ open: false }">
-                    <button @click="open = !open" class="navbar-link inline-flex items-center {{ request()->routeIs('marketplace') || request()->routeIs('mes-commandes') ? 'active' : '' }}">
-                        Boutique EGENT
-                        <i class="fas fa-chevron-down ml-2 text-sm"></i>
-                    </button>
-                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                        <a href="{{ route('marketplace') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Catalogue</a>
-                        <a href="@auth{{ route('mes-commandes') }}@else{{ route('login') }}@endauth" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mes commandes</a>
                     </div>
                 </div>
                 <a href="{{ route('contact') }}" class="navbar-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
@@ -215,57 +190,19 @@
                     @if(auth()->user()->is_admin)
                         <a href="{{ route('admin.notifications.index') }}" class="navbar-link">Notifications</a>
                         <a href="{{ route('admin.formations.index') }}" class="navbar-link">Gérer les Formations</a>
-                        <a href="{{ route('admin.installations.index') }}" class="navbar-link">Gérer les Devis</a>
-                        <a href="{{ route('admin.products.index') }}" class="navbar-link">Gérer les Produits</a>
                         <a href="{{ route('admin.users.index') }}" class="navbar-link">Gérer les Utilisateurs</a>
                     @elseif(auth()->user()->role === 'technician')
                         <a href="{{ route('formation') }}" class="navbar-link">Formations à CREFER</a>
-                        <a href="{{ route('installation') }}" class="navbar-link">Devis</a>
                         <a href="{{ route('technician.installations') }}" class="navbar-link">Installations</a>
                         <a href="{{ route('technician.maintenance') }}" class="navbar-link">Maintenance</a>
                     @elseif(auth()->user()->role === 'client')
                         <a href="{{ route('home') }}" class="navbar-link">Accueil</a>
-                        <a href="{{ route('fonctionnalite') }}" class="navbar-link">Fonctionnalités</a>
-                        <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" 
-                                    class="flex items-center justify-between w-full py-2 px-4 text-left navbar-link rounded-lg">
-                                <span class="flex items-center">
-                                    <i class="fas fa-cogs mr-2"></i>
-                                    Services
-                                </span>
-                                <i class="fas fa-chevron-down ml-2 text-sm transition-transform duration-200"
-                                   :class="{'transform rotate-180': open}"></i>
-                            </button>
-                            <div x-show="open" 
-                                 x-transition:enter="transition ease-out duration-200"
-                                 x-transition:enter-start="opacity-0 transform scale-95"
-                                 x-transition:enter-end="opacity-100 transform scale-100"
-                                 class="dropdown-content">
-                                <a href="{{ route('services.index') }}" class="block py-2 px-4 navbar-link">
-                                    <i class="fas fa-list-ul mr-2"></i>Nos services
-                                </a>
-                                <a href="{{ route('client.demandes-services.index') }}" class="block py-2 px-4 navbar-link">
-                                    <i class="fas fa-clipboard-list mr-2"></i>Mes demandes
-                                </a>
-                                <a href="{{ route('ia-services') }}" class="block py-2 px-4 navbar-link">
-                                    <i class="fas fa-robot mr-2"></i>Services IA
-                                </a>
-                            </div>
-                        </div>
                         <a href="{{ route('formation') }}" class="navbar-link">Formations à CREFER</a>
-                        <a href="{{ route('installation') }}" class="navbar-link">Devis</a>
-                        <a href="{{ route('marketplace') }}" class="navbar-link">Boutique EGENT</a>
-                        <a href="@auth{{ route('mes-commandes') }}@else{{ route('login') }}@endauth" class="navbar-link">Mes commandes</a>
                         <a href="{{ route('contact') }}" class="navbar-link">Contact</a>
                     @endif
                 @else
                     <a href="{{ route('home') }}" class="navbar-link">Accueil</a>
-                    <a href="{{ route('fonctionnalite') }}" class="navbar-link">Fonctionnalités</a>
-                    <a href="{{ route('services.index') }}" class="navbar-link">Services</a>
                     <a href="{{ route('formation') }}" class="navbar-link">Formations à CREFER</a>
-                    <a href="{{ route('installation') }}" class="navbar-link">Devis</a>
-                    <a href="{{ route('marketplace') }}" class="navbar-link">Boutique EGENT</a>
-                    <!-- Pas de lien Mes commandes si non connecté -->
                     <a href="{{ route('contact') }}" class="navbar-link">Contact</a>
                 @endif
             </div>

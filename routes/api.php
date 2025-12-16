@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\InverterApiController;
 use App\Http\Controllers\DevisIAController;
 use App\Http\Controllers\DimensionnementIAController;
 use App\Http\Controllers\AnalyseProductionIAController;
@@ -17,8 +16,7 @@ Route::middleware('api.auth')->group(function () {
     Route::post('/meteo-ia', [MeteoIAController::class, 'prevoir']);
 });
 
-// Route de scan des onduleurs (accessible sans authentification)
-Route::post('/onduleurs/scan', [InverterApiController::class, 'scan']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     // Routes pour les données de performance
@@ -35,28 +33,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reports/download/{type}/{period}', 'App\Http\Controllers\Api\ReportController@download')
         ->where(['type' => 'pdf|excel', 'period' => 'journalier|hebdomadaire|mensuel']);
     Route::post('/reports/preferences', 'App\Http\Controllers\Api\ReportController@savePreferences');
-
-    // Routes pour les onduleurs
-    Route::prefix('inverters')->group(function () {
-        // Routes existantes
-        Route::get('/supported', 'App\Http\Controllers\InverterController@getSupportedInverters');
-        Route::get('/{inverterName?}/status', 'App\Http\Controllers\InverterController@getStatus');
-        Route::get('/{inverterName?}/alarms', 'App\Http\Controllers\InverterController@getAlarms');
-        Route::get('/{inverterName?}/info', 'App\Http\Controllers\InverterController@getDeviceInfo');
-
-        // Nouvelles routes
-        Route::get('/{inverterName}/history/{period}', 'App\Http\Controllers\InverterController@getHistory')
-            ->where('period', 'daily|weekly|monthly|yearly');
-        Route::get('/{inverterName}/efficiency', 'App\Http\Controllers\InverterController@getEfficiency');
-        Route::post('/{inverterName}/configure', 'App\Http\Controllers\InverterController@updateConfiguration');
-        Route::post('/{inverterName}/firmware/update', 'App\Http\Controllers\InverterController@updateFirmware');
-        Route::post('/{inverterName}/control', 'App\Http\Controllers\InverterController@controlProduction');
-        Route::get('/{inverterName}/schedule', 'App\Http\Controllers\InverterController@getSchedule');
-        Route::post('/{inverterName}/schedule', 'App\Http\Controllers\InverterController@updateSchedule');
-        Route::get('/{inverterName}/diagnostics', 'App\Http\Controllers\InverterController@getDiagnostics');
-        Route::post('/{inverterName}/reset', 'App\Http\Controllers\InverterController@resetDevice');
-        Route::get('/{inverterName}/maintenance', 'App\Http\Controllers\InverterController@getMaintenanceInfo');
-    });
 
     // Route pour les données de production et consommation en temps réel
     Route::get('/realtime-production', [RealtimeDataController::class, 'production']);

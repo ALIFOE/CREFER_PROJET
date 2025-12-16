@@ -70,7 +70,7 @@ class InstallationController extends Controller
      */
     public function show(Installation $installation)
     {
-        $installation->load('utilisateur', 'panneaux', 'onduleurs', 'systemesStockage');
+        $installation->load('utilisateur', 'panneaux', 'systemesStockage');
         return response()->json($installation);
     }
 

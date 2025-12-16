@@ -52,14 +52,6 @@ class SystemeIntelligentController extends Controller
                 'message' => "Performance de l'installation {$installation->nom}: {$performance}%",
                 'status' => $performance > 80 ? 'success' : 'warning'
             ];
-
-            // Vérification des onduleurs
-            foreach ($installation->onduleurs as $onduleur) {
-                $diagnostics[] = [
-                    'message' => "État de l'onduleur {$onduleur->modele}: " . ($onduleur->est_connecte ? 'Connecté' : 'Déconnecté'),
-                    'status' => $onduleur->est_connecte ? 'success' : 'error'
-                ];
-            }
         }
 
         $averagePerformance = $installations->count() > 0 ? 

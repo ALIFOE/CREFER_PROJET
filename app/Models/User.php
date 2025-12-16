@@ -57,11 +57,6 @@ class User extends Authenticatable
         return $this->hasMany(Devis::class);
     }
 
-    public function onduleurs()
-    {
-        return $this->hasMany(Onduleur::class);
-    }
-
     public function dimensionnements()
     {
         return $this->hasMany(Dimensionnement::class);

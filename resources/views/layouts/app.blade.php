@@ -122,7 +122,6 @@
                         <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
                         <ul class="space-y-2">
                             <li><a href="{{ route('home') }}" class="footer-link">Accueil</a></li>
-                            <li><a href="{{ route('fonctionnalite') }}" class="footer-link">Fonctionnalités</a></li>
                             <li><a href="{{ route('formation') }}" class="footer-link">Formations</a></li>
                             <li><a href="{{ route('about') }}" class="footer-link">À propos</a></li>
                             <li><a href="{{ route('contact') }}" class="footer-link">Contact</a></li>

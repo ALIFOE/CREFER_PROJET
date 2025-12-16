@@ -51,11 +51,6 @@ class Installation extends Model
         return $this->hasMany(Panneau::class);
     }
 
-    public function onduleurs()
-    {
-        return $this->hasMany(Onduleur::class);
-    }
-
     public function systemesStockage()
     {
         return $this->hasMany(SystemeStockage::class);
