@@ -20,9 +20,6 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ClientActivity' => [
             'App\Listeners\NotifyAdminOfClientActivity',
         ],
-        'App\Events\FormationInscriptionCreated' => [
-            'App\Listeners\SendAdminAlert',
-        ],
     ];
 
     /**

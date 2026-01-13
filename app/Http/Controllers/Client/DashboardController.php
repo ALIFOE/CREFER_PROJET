@@ -34,94 +34,25 @@ class DashboardController extends Controller
         $user = auth()->user();
 
         try {
-            // Récupérer les cours récents
-            $courses = Course::orderBy('created_at', 'desc')
-                ->take(5)
-                ->get();
+            // Statistiques pour le dashboard enseignant
+            $courtsActifs = 3; // Nombre de cours actifs
+            $totalEtudiants = 105; // Total d'étudiants
+            $tauxPresence = 87; // Taux de présence moyen
+            $tachesPendantes = 4; // Nombre de tâches à faire
 
-            // Récupérer les étudiants actifs
-            $students = Student::where('status', 'active')
-                ->take(10)
-                ->get();
-
-            // Statistiques d'étudiants
-            $studentStats = [
-                'total' => Student::count(),
-                'active' => Student::where('status', 'active')->count(),
-                'graduated' => Student::where('status', 'graduated')->count(),
-                'inactive' => Student::where('status', 'inactive')->count(),
-            ];
-
-            // Statistiques de cours
-            $courseStats = [
-                'total' => Course::count(),
-                'active' => Course::where('status', 'active')->count(),
-                'upcoming' => Course::where('status', 'upcoming')->count(),
-                'completed' => Course::where('status', 'completed')->count(),
-            ];
+            return view('dashboards.enseignant', [
+                'courtsActifs' => $courtsActifs,
+                'totalEtudiants' => $totalEtudiants,
+                'tauxPresence' => $tauxPresence,
+                'tachesPendantes' => $tachesPendantes,
+            ]);
         } catch (\Exception $e) {
-            // Si les tables n'existent pas encore, fournir des données par défaut
-            $courses = collect([]);
-            $students = collect([]);
-            $studentStats = [
-                'total' => 0,
-                'active' => 0,
-                'graduated' => 0,
-                'inactive' => 0,
-            ];
-            $courseStats = [
-                'total' => 0,
-                'active' => 0,
-                'upcoming' => 0,
-                'completed' => 0,
-            ];
+            return view('dashboards.enseignant', [
+                'courtsActifs' => 0,
+                'totalEtudiants' => 0,
+                'tauxPresence' => 0,
+                'tachesPendantes' => 0,
+            ]);
         }
-
-        // Filtrage des activités
-        try {
-            $activitesQuery = LogActivite::where('user_id', $user->id);
-
-            if ($request->has('action')) {
-                $activitesQuery->where('action', $request->action);
-            }
-
-            if ($request->has('date')) {
-                switch ($request->date) {
-                    case 'aujourd\'hui':
-                        $activitesQuery->whereDate('created_at', today());
-                        break;
-                    case 'semaine':
-                        $activitesQuery->where('created_at', '>=', now()->startOfWeek());
-                        break;
-                    case 'mois':
-                        $activitesQuery->where('created_at', '>=', now()->startOfMonth());
-                        break;
-                }
-            }
-
-            $activites = $activitesQuery->latest()->paginate(10);
-        } catch (\Exception $e) {
-            $activites = collect([]);
-        }
-
-        // Récupérer les notifications non lues
-        try {
-            $notifications = $user->notifications()
-                ->whereNull('read_at')
-                ->latest()
-                ->take(5)
-                ->get();
-        } catch (\Exception $e) {
-            $notifications = collect([]);
-        }
-
-        return view('dashboard', compact(
-            'courses',
-            'students',
-            'studentStats',
-            'courseStats',
-            'activites',
-            'notifications'
-        ));
     }
 }

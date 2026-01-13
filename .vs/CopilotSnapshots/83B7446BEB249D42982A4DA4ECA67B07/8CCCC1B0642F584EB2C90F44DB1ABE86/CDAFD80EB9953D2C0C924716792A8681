@@ -1,0 +1,124 @@
+﻿#!/usr/bin/env php
+<?php
+
+namespace App\Console\Commands;
+
+use App\Models\User;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
+
+class CreateTestUsers extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'users:create-test {--force : Forcer la création même si les utilisateurs existent}';
+
+    /**
+     * The description of the console command.
+     *
+     * @var string
+     */
+    protected $description = 'Créer les utilisateurs test pour Enseignant et Admin';
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        $this->info('╔════════════════════════════════════════════════════════╗');
+        $this->info('║   CREFER - Création des Utilisateurs Test              ║');
+        $this->info('╚════════════════════════════════════════════════════════╝');
+        $this->newLine();
+
+        try {
+            // Créer l'utilisateur Enseignant
+            $this->info('📚 Création de l\'utilisateur Enseignant...');
+            
+            $enseignant = User::updateOrCreate(
+                ['email' => 'enseignant@test.com'],
+                [
+                    'name' => 'Enseignant Test',
+                    'email' => 'enseignant@test.com',
+                    'password' => Hash::make('password'),
+                    'role' => 'enseignant',
+                    'email_verified_at' => now(),
+                ]
+            );
+            
+            $this->line('✅ Enseignant créé/mis à jour:');
+            $this->line('   Email: enseignant@test.com');
+            $this->line('   Mot de passe: password');
+            $this->line('   Rôle: enseignant');
+            $this->line('   ID: ' . $enseignant->id);
+            $this->newLine();
+
+            // Créer l'utilisateur Admin
+            $this->info('🔧 Création de l\'utilisateur Administrateur...');
+            
+            $admin = User::updateOrCreate(
+                ['email' => 'admin@test.com'],
+                [
+                    'name' => 'Admin Test',
+                    'email' => 'admin@test.com',
+                    'password' => Hash::make('password'),
+                    'role' => 'admin',
+                    'email_verified_at' => now(),
+                ]
+            );
+            
+            $this->line('✅ Administrateur créé/mis à jour:');
+            $this->line('   Email: admin@test.com');
+            $this->line('   Mot de passe: password');
+            $this->line('   Rôle: admin');
+            $this->line('   ID: ' . $admin->id);
+            $this->newLine();
+
+            // Afficher le résumé
+            $this->info('╔════════════════════════════════════════════════════════╗');
+            $this->info('║              ✅ SUCCÈS - Utilisateurs Créés            ║');
+            $this->info('╚════════════════════════════════════════════════════════╝');
+            $this->newLine();
+
+            $this->line('<fg=cyan>📋 IDENTIFIANTS DE CONNEXION</>');
+            $this->line('════════════════════════════════════════════════════════');
+            $this->newLine();
+
+            $this->line('<fg=blue>👨‍🏫 ENSEIGNANT:</>');
+            $this->line('   Email:    enseignant@test.com');
+            $this->line('   Password: password');
+            $this->line('   URL:      http://localhost:8000');
+            $this->line('   Rôle:     Sélectionner l\'onglet "Enseignant"');
+            $this->newLine();
+
+            $this->line('<fg=yellow>🔧 ADMINISTRATEUR:</>');
+            $this->line('   Email:    admin@test.com');
+            $this->line('   Password: password');
+            $this->line('   URL:      http://localhost:8000');
+            $this->line('   Rôle:     Sélectionner l\'onglet "Admin"');
+            $this->newLine();
+
+            $this->line('════════════════════════════════════════════════════════');
+            $this->newLine();
+
+            $this->line('<fg=green>🚀 PROCHAINES ÉTAPES:</>');
+            $this->line('   1. Lancer le serveur: php artisan serve');
+            $this->line('   2. Aller à: http://localhost:8000');
+            $this->line('   3. Tester les deux rôles avec les identifiants ci-dessus');
+            $this->newLine();
+
+            $this->info('✨ Script terminé avec succès!');
+            $this->newLine();
+
+            return 0;
+
+        } catch (\Exception $e) {
+            $this->error('❌ ERREUR: ' . $e->getMessage());
+            return 1;
+        }
+    }
+}

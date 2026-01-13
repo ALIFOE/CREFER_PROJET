@@ -39,6 +39,11 @@ class RapportController extends Controller
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
 
+    public function show()
+    {
+        return view('rapports.index');
+    }
+
     private function getProductionData($period)
     {
         // Simuler les données de production

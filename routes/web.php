@@ -8,23 +8,15 @@ use App\Http\Controllers\Client\DashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Client\InstallationController;
 use App\Http\Controllers\Client\RealtimeDataController;
-use App\Http\Controllers\DimensionnementController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\LogActiviteController;
 use App\Http\Controllers\TechnicianController;
-use App\Http\Controllers\SuiviProductionController;
 use App\Http\Controllers\RapportController;
-use App\Http\Controllers\MeteoController;
 use App\Http\Controllers\RegionalPerformanceController;
 use App\Http\Controllers\MessageController;
-use App\Http\Controllers\Admin\FormationController as AdminFormationController;
 use App\Http\Controllers\Admin\NotificationController;
-use App\Http\Controllers\FormationController;
-use App\Http\Controllers\Admin\FormationInscriptionController;
-use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\OptimisationController;
 use App\Http\Controllers\SupportController;
-use App\Http\Controllers\RapportsController;
 
 // Route de migration temporaire (à supprimer après)
 Route::get('/migrate-now', function () {
@@ -45,26 +37,8 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-// Route de raccourci pour le dimensionnement
-Route::get('/dimensionnement', [DimensionnementController::class, 'create'])->name('dimensionnement');
-
-// Routes pour les formations
-Route::prefix('formation')->group(function () {
-    Route::get('/', [FormationController::class, 'index'])->name('formation');
-    Route::get('/inscription', [FormationController::class, 'show'])->name('inscription');
-    Route::post('/inscription', [FormationController::class, 'inscription'])->middleware(['auth'])->name('formation.inscription');
-    Route::get('/mes-inscriptions', [FormationController::class, 'mesInscriptions'])->middleware(['auth'])->name('formations.mes-inscriptions');
-    Route::get('/inscription/{inscription}/document/{type}', [FormationController::class, 'downloadDocument'])
-        ->middleware(['auth'])
-        ->name('formation.document.download');
-    Route::get('/{formation}/flyer', [FormationController::class, 'downloadFlyer'])->name('formation.flyer.download');
-    Route::get('/inscription/{inscription}/finaliser', [FormationController::class, 'finaliserInscription'])
-        ->middleware(['auth'])
-        ->name('formation.finaliser-inscription');
-    Route::post('/inscription/{inscription}/soumettre-documents', [FormationController::class, 'soumettreDocuments'])
-        ->middleware(['auth'])
-        ->name('formation.soumettre-documents');
-});
+// Redirection de /login vers /
+Route::redirect('/login', '/', 301);
 
 // Routes d'administration
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -81,39 +55,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/', [NotificationController::class, 'destroyAll'])->name('destroyAll');
     });
 
-    // Routes pour les formations et inscriptions
-    Route::prefix('formations')->group(function () {
-        // Routes pour les inscriptions aux formations
-        Route::get('/inscriptions', [AdminFormationController::class, 'inscriptions'])->name('formations.inscriptions.index');
-        Route::prefix('inscriptions')->group(function () {
-            Route::get('/{inscription}', [FormationInscriptionController::class, 'show'])->name('formations.inscriptions.show');
-            Route::put('/{inscription}/status', [FormationInscriptionController::class, 'updateStatus'])->name('formations.inscriptions.status');
-            Route::delete('/{inscription}', [FormationInscriptionController::class, 'destroy'])->name('formations.inscriptions.destroy');
-            Route::get('/{inscription}/document/{type}', [FormationInscriptionController::class, 'downloadDocument'])->name('formations.inscriptions.document.download');
-        });
-
-        // Routes principales des formations
-        Route::get('/', [AdminFormationController::class, 'index'])->name('formations.index');
-        Route::get('/create', [AdminFormationController::class, 'create'])->name('formations.create');
-        Route::post('/', [AdminFormationController::class, 'store'])->name('formations.store');
-        Route::get('/{formation}', [AdminFormationController::class, 'show'])->name('formations.show');
-        Route::get('/{formation}/edit', [AdminFormationController::class, 'edit'])->name('formations.edit');
-        Route::put('/{formation}', [AdminFormationController::class, 'update'])->name('formations.update');
-        Route::delete('/{formation}', [AdminFormationController::class, 'destroy'])->name('formations.destroy');
-        Route::get('/{formation}/flyer', [AdminFormationController::class, 'downloadFlyer'])->name('formations.flyer.download');
-    });
-
-    // Routes pour le monitoring des services IA
-    Route::get('/services/status', [App\Http\Controllers\Admin\ServiceStatusController::class, 'index'])
-        ->name('services.status');
-    Route::post('/services/reset-fallback', [App\Http\Controllers\Admin\ServiceStatusController::class, 'resetFallbackMode'])
-        ->name('services.reset-fallback');
-    Route::post('/services/reset-quota', [App\Http\Controllers\Admin\ServiceStatusController::class, 'resetQuotaCount'])
-        ->name('services.reset-quota');
-
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
-    Route::get('formations/{formation}/flyer', [AdminFormationController::class, 'downloadFlyer'])->name('formations.flyer.download');
-    Route::resource('formations', AdminFormationController::class);
     Route::resource('installations', InstallationController::class);
     Route::get('installations/pending', [InstallationController::class, 'pending'])->name('installations.pending');
 });
@@ -122,7 +64,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::middleware(['auth'])->group(function () {
     // Route du tableau de bord client
     Route::get('/dashboard', [App\Http\Controllers\Client\DashboardController::class, 'index'])
-        ->middleware(['client'])
+        ->middleware(['enseignant'])
         ->name('dashboard');
 
     Route::get('/performances-regionales', [RegionalPerformanceController::class, 'index'])->name('performances.regionales');
@@ -136,14 +78,6 @@ Route::middleware(['auth'])->group(function () {
     // Routes pour les activités
     Route::get('/activites', [LogActiviteController::class, 'index'])->name('activites.index');
     
-    // Routes pour la maintenance
-    Route::prefix('maintenance')->group(function () {
-        Route::get('/predictive', [MaintenanceController::class, 'index'])->name('maintenance-predictive');
-        Route::post('/', [MaintenanceController::class, 'store'])->name('maintenance.store');
-        Route::get('/{id}/edit', [MaintenanceController::class, 'edit'])->name('maintenance.edit');
-        Route::put('/{id}', [MaintenanceController::class, 'update'])->name('maintenance.update');
-    });
-
     // Routes pour les paramètres
     Route::get('/parametres', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
     Route::put('/parametres/update', [App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
@@ -152,11 +86,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/parametres/2fa', [App\Http\Controllers\SettingsController::class, 'toggleTwoFactor'])->name('settings.2fa');
 
     // Routes pour les dimensionnements
-    Route::get('/dimensionnements', [DimensionnementController::class, 'index'])->name('dimensionnements.index');
-    Route::get('/dimensionnements/create', [DimensionnementController::class, 'create'])->name('dimensionnements.create');
-    Route::post('/dimensionnements', [DimensionnementController::class, 'store'])->name('dimensionnements.store');
-    Route::get('/dimensionnements/{dimensionnement}', [DimensionnementController::class, 'show'])->name('dimensionnements.show');
-});
+   
 
 // Routes des services
 Route::middleware(['auth'])->group(function () {
@@ -212,5 +142,26 @@ Route::get('/healthz', function() {
 
 require __DIR__.'/auth.php';
 
-// Téléchargement des documents optionnels d'inscription formation
-Route::get('/admin/formations/inscriptions/{inscription}/autre-document/{index}', [App\Http\Controllers\FormationController::class, 'downloadAutreDocument'])->name('admin.formations.inscriptions.autre-document.download');
+// ========================
+// Routes pour le système de gestion scolaire
+// ========================
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Routes pour les étudiants
+    Route::resource('students', 'App\Http\Controllers\StudentController');
+    
+    // Routes pour les professeurs
+    Route::resource('professors', 'App\Http\Controllers\ProfessorController');
+    
+    // Routes pour les salles de classe
+    Route::resource('classrooms', 'App\Http\Controllers\ClassroomController');
+    
+    // Routes pour les cours
+    Route::resource('courses', 'App\Http\Controllers\CourseController');
+    
+    // Routes pour les inscriptions
+    Route::resource('enrollments', 'App\Http\Controllers\EnrollmentController');
+    
+    // Routes pour les présences
+    Route::resource('attendances', 'App\Http\Controllers\AttendanceController');
+});

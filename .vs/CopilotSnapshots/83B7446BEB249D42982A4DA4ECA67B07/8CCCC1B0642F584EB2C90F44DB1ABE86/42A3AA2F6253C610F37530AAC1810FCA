@@ -1,0 +1,272 @@
+﻿# 🗄️ BASE DE DONNÉES - CONFIGURATION CREFER
+
+## 📋 Informations Principales
+
+### Type de Base de Données
+**MySQL** 🐬
+
+### Configuration
+```
+Type:        MySQL
+Hôte:        127.0.0.1 (localhost)
+Port:        3306
+Base:        ne_don_solar_db
+Utilisateur: root
+Mot de passe: (vide)
+```
+
+---
+
+## 📄 Fichier de Configuration
+
+**Fichier**: `.env`
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ne_don_solar_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+## 🔗 Détails de Connexion
+
+| Paramètre | Valeur |
+|-----------|--------|
+| **SGBD** | MySQL 5.7+ |
+| **Hôte** | 127.0.0.1 (localhost) |
+| **Port** | 3306 (port par défaut) |
+| **Nom BD** | `ne_don_solar_db` |
+| **Utilisateur** | `root` |
+| **Mot de passe** | (aucun) |
+| **Pilote Laravel** | mysql |
+
+---
+
+## 📊 Tables Principales
+
+Les tables créées par les migrations Laravel incluent:
+
+### Tables d'Authentification
+- `users` - Utilisateurs
+- `password_resets` - Réinitialisation de mots de passe
+
+### Tables Métier (CREFER)
+- `formations` - Formations
+- `formations_inscriptions` - Inscriptions aux formations
+- `classrooms` - Salles de classe
+- `students` - Étudiants
+
+### Tables d'Installation
+- `installations` - Installations solaires
+- `devis` - Devis
+- `orders` - Commandes
+
+### Tables de Configuration
+- `log_activites` - Logs d'activités
+- `notifications` - Notifications
+- `settings` - Paramètres système
+
+---
+
+## 🚀 Commandes Utiles
+
+### Vérifier la Connexion
+```bash
+# Tester la connexion
+php artisan db
+# ou
+php artisan tinker
+>>> DB::connection()->getPdo();
+```
+
+### Voir les Tables
+```bash
+php artisan tinker
+>>> DB::select('SHOW TABLES')
+>>> exit
+```
+
+### Consulter une Table
+```bash
+# Via Tinker
+php artisan tinker
+>>> User::all()
+>>> Formation::all()
+>>> exit
+```
+
+### Exécuter les Migrations
+```bash
+# Créer toutes les tables
+php artisan migrate
+
+# Réinitialiser (attention!)
+php artisan migrate:refresh
+
+# Ajouter des données (seeders)
+php artisan db:seed
+```
+
+---
+
+## 🔐 Sécurité
+
+### ⚠️ Important
+- **Password vide**: À changer en production
+- **Root user**: À remplacer par un utilisateur dédié
+- **localhost**: À adapter selon l'environnement
+
+### Recommandations
+```
+Production:
+- Changer le mot de passe root
+- Créer un utilisateur dédié
+- Restreindre les permissions
+- Configurer les backups
+- Activer les logs
+```
+
+---
+
+## 📱 Outils d'Accès
+
+### Option 1: phpMyAdmin
+```
+URL: http://localhost/phpmyadmin
+Utilisateur: root
+Mot de passe: (vide)
+```
+
+### Option 2: Ligne de Commande MySQL
+```bash
+mysql -h 127.0.0.1 -u root ne_don_solar_db
+
+# Ou simplement
+mysql -u root ne_don_solar_db
+```
+
+### Option 3: Laravel Tinker
+```bash
+php artisan tinker
+>>> DB::select('SELECT * FROM users');
+```
+
+### Option 4: DBeaver / Sequel Pro / Navicat
+- Installer l'outil
+- Créer une connexion MySQL
+- Host: 127.0.0.1
+- User: root
+- DB: ne_don_solar_db
+
+---
+
+## 📊 Structure Utilisateurs
+
+Après l'exécution de `php artisan users:create-test`, la table `users` contiendra:
+
+```
+ID | name          | email                 | role       | password
+---|---------------|----------------------|------------|----------
+1  | Enseignant... | enseignant@test.com   | enseignant | [hashed]
+2  | Admin Test    | admin@test.com        | admin      | [hashed]
+```
+
+---
+
+## 🔄 Flux de Données
+
+```
+Application Laravel
+    ↓
+PDO/MySQL Driver
+    ↓
+MySQL Server (127.0.0.1:3306)
+    ↓
+Base de données (ne_don_solar_db)
+    ↓
+Tables (users, formations, etc.)
+```
+
+---
+
+## 🆘 Dépannage
+
+### Erreur: "Connection refused"
+```bash
+# Vérifier que MySQL est en cours d'exécution
+# Windows: Services → MySQL80
+# Mac: brew services list
+# Linux: sudo service mysql status
+```
+
+### Erreur: "Unknown database 'ne_don_solar_db'"
+```bash
+# Exécuter les migrations
+php artisan migrate
+```
+
+### Erreur: "Access denied for user 'root'"
+```bash
+# Vérifier le mot de passe dans .env
+# Par défaut: vide (pas de mot de passe)
+```
+
+### Tables Manquantes
+```bash
+# Restaurer les migrations
+php artisan migrate:refresh --seed
+```
+
+---
+
+## 📈 Informations Supplémentaires
+
+### Version Laravel
+```bash
+php artisan --version
+# Laravel Framework X.X.X
+```
+
+### Version PHP
+```bash
+php -v
+# PHP X.X.X
+```
+
+### Driver MySQL
+```bash
+# Dans .env
+DB_CONNECTION=mysql
+```
+
+---
+
+## 📚 Ressources
+
+- [Laravel Database](https://laravel.com/docs/database)
+- [MySQL Documentation](https://dev.mysql.com/doc/)
+- [PHPMyAdmin](https://www.phpmyadmin.net/)
+- [MySQL Workbench](https://www.mysql.com/products/workbench/)
+
+---
+
+## ✅ Checklist de Configuration
+
+- [x] MySQL installé et en cours d'exécution
+- [x] Base de données créée: `ne_don_solar_db`
+- [x] Utilisateur: root
+- [x] Configuration dans `.env`
+- [x] Connexion testée
+- [x] Migrations exécutées
+- [x] Tables créées
+- [x] Utilisateurs test créés
+
+---
+
+**Base de Données**: MySQL
+**Version**: 5.7+
+**État**: ✅ Opérationnel

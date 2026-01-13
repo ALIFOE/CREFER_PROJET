@@ -10,17 +10,16 @@ class Classroom extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'classroom_id';
     protected $fillable = [
-        'name',
-        'code',
+        'room_number',
+        'building',
         'capacity',
-        'location',
-        'description',
-        'status',
     ];
 
     public function courses(): HasMany
     {
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Course::class, 'classroom_id');
     }
 }
+

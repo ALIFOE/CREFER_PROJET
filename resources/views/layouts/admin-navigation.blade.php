@@ -12,25 +12,6 @@
                 <!-- Navigation Items (centré) -->
                 <div class="flex-1 flex justify-center">
                     <div class="flex space-x-6">
-                        <!-- Formations -->
-                        <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                            <button @click.prevent.stop="open = !open" class="navbar-link flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-yellow-100 transition relative">
-                                <i class="fas fa-graduation-cap mr-2"></i> Formations
-                                @if(isset($inscriptionsCount) && $inscriptionsCount > 0)
-                                    <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">{{ $inscriptionsCount }}</span>
-                                @endif
-                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                            </button>
-                            <div x-show="open" @click.away="open = false" x-transition class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-                                <a href="{{ route('admin.formations.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50">Liste des formations</a>
-                                <a href="{{ route('admin.formations.inscriptions.index') }}" class="flex px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 items-center">
-                                    Liste des inscriptions
-                                    @if(isset($inscriptionsCount) && $inscriptionsCount > 0)
-                                        <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">{{ $inscriptionsCount }}</span>
-                                    @endif
-                                </a>
-                            </div>
-                        </div>
                         <!-- Boutique -->
                         <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                             <button @click.prevent.stop="open = !open" class="navbar-link flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-yellow-100 transition relative">
@@ -69,7 +50,6 @@
                                         <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">{{ $servicesRequestsCount }}</span>
                                     @endif
                                 </a>
-                                <a href="{{ route('admin.services.status') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50"><i class="fas fa-tachometer-alt mr-2"></i>État des services IA</a>
                             </div>
                         </div>
                         <!-- Galerie -->

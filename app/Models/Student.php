@@ -11,43 +11,42 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'student_id';
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'firstname',
+        'lastname',
         'email',
         'phone',
-        'student_id',
         'date_of_birth',
         'address',
-        'city',
-        'zip_code',
-        'country',
+        'enrollment_date',
         'status',
     ];
 
     protected $casts = [
         'date_of_birth' => 'date',
+        'enrollment_date' => 'date',
     ];
 
     public function enrollments(): HasMany
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasMany(Enrollment::class, 'student_id');
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class, 'student_id');
     }
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class, 'enrollments')
-            ->withPivot('enrollment_date', 'status', 'grade')
+        return $this->belongsToMany(Course::class, 'enrollments', 'student_id', 'course_id')
+            ->withPivot('enrollment_date', 'grade', 'attendance_rate')
             ->withTimestamps();
-    }
-
-    public function assignments(): HasMany
-    {
-        return $this->hasMany(Assignment::class);
     }
 
     public function getFullNameAttribute(): string
     {
-        return "{$this->first_name} {$this->last_name}";
+        return "{$this->firstname} {$this->lastname}";
     }
 }

@@ -14,8 +14,8 @@ trait HasRoles
         return $this->role === 'technicien';
     }
 
-    public function isClient(): bool
+    public function isEnseignant(): bool
     {
-        return $this->role === 'client';
+        return $this->role === 'enseignant';
     }
 }

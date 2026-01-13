@@ -5,19 +5,13 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Order;
 use App\Models\Devis;
-use App\Models\ServiceRequest;
-use App\Models\Formation;
-use App\Models\FormationInscription;
 use App\Models\User;
 use App\Models\Product;
-use App\Models\Service;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmationMail;
 use App\Mail\AdminOrderNotificationMail;
 use App\Mail\DevisConfirmationMail;
 use App\Mail\AdminDevisNotificationMail;
-use App\Mail\ServiceRequestConfirmationMail;
-use App\Mail\AdminServiceRequestNotificationMail;
 use App\Mail\FormationConfirmationMail;
 use Illuminate\Support\Facades\Log;
 
@@ -121,36 +115,7 @@ class TestEmailNotificationsCommand extends Command
 
     private function testServiceEmails()
     {
-        $this->info('Test des emails de service...');
-        
-        try {
-            $service = Service::firstOrCreate(
-                ['nom' => 'Service Test'],
-                ['description' => 'Service pour test des notifications']
-            );
-
-            $serviceRequest = ServiceRequest::create([
-                'service_id' => $service->id,
-                'nom' => 'Client Test',
-                'email' => 'test@example.com',
-                'telephone' => '0123456789',
-                'adresse' => 'Adresse de test',
-                'description' => 'Description de test',
-                'status' => 'pending'
-            ]);
-
-            // Email client
-            Mail::to($serviceRequest->email)->send(new ServiceRequestConfirmationMail($serviceRequest));
-            
-            // Email admin
-            Mail::to(User::getAdminEmails())->send(new AdminServiceRequestNotificationMail($serviceRequest));
-
-            $this->info('✓ Emails de service envoyés avec succès');
-            
-        } catch (\Exception $e) {
-            $this->error('× Erreur lors du test des emails de service: ' . $e->getMessage());
-            Log::error('Test notification service échoué', ['error' => $e->getMessage()]);
-        }
+        // Section des services supprimée - fonctionnalité retirée du projet
     }
 
     private function testFormationEmails()

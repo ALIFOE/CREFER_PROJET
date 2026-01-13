@@ -3,723 +3,414 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CREFER - Plateforme de Gestion des Formations et des Étudiants</title>
-        <!-- Charger d'abord Font Awesome -->
+        <title>CREFER - Connexion</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-        <!-- Charger Chart.js depuis CDN avec une version spécifique -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-        <!-- Ajouter le plugin d'annotations pour Chart.js -->
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0/dist/chartjs-plugin-annotation.min.js"></script>
-        <!-- Charger Alpine.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.min.js" defer></script>
         
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: #f8f9fa;
-                animation: backgroundZoom 20s ease-in-out infinite alternate;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
             }
 
-            @keyframes backgroundZoom {
-                0% {
-                    background-size: 100% auto;
-                }
-                100% {
-                    background-size: 120% auto;
-                }
+            .login-container {
+                display: flex;
+                min-height: 100vh;
+                align-items: center;
+                justify-content: center;
             }
 
-            .solar-gradient {
-                background: linear-gradient(135deg, var(--primary-color, #FFA500) 0%, var(--accent-color, #0000FF) 100%);
-            }
-            .card {
-                transition: all 0.3s ease;
-                border-radius: 12px;
+            .login-card {
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
                 overflow: hidden;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                max-width: 1000px;
+                width: 100%;
             }
-            .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+            .login-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
             }
-            .stat-card {
-                border-left: 4px solid #1e88e5;
+
+            .login-section {
+                padding: 50px 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
-            .btn-primary {
-                background-color: #1e88e5;
-                color: white;
-                padding: 0.5rem 1.5rem;
-                border-radius: 5px;
+
+            .login-header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .login-header img {
+                height: 60px;
+                margin: 0 auto 20px;
+            }
+
+            .login-header h1 {
+                font-size: 28px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .login-header p {
+                color: #666;
+                font-size: 14px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: #333;
+                font-size: 14px;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                font-size: 14px;
                 transition: all 0.3s ease;
             }
-            .btn-primary:hover {
-                background-color: #0d47a1;
+
+            .form-group input:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
             }
-            .hero-section {
-                min-height: 700px;
-                background-image: url('{{ asset('images/image-2.jpg')}}');
-                background-size: cover;
-                background-position: center;
+
+            .remember-me {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+
+            .remember-me input {
+                margin-right: 8px;
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+            .submit-btn {
+                width: 100%;
+                padding: 12px;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: white;
+            }
+
+            .enseignant-btn {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+
+            .enseignant-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            }
+
+            .admin-btn {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            }
+
+            .admin-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+            }
+
+            .divider {
+                text-align: center;
+                margin: 30px 0;
                 position: relative;
-                animation: heroFadeIn 2s ease-out;
+                color: #999;
+                font-size: 14px;
             }
 
-            @keyframes heroFadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .hero-section::before {
+            .divider::before {
                 content: '';
                 position: absolute;
-                top: 0;
+                top: 50%;
                 left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url('{{ asset('images/12.jpg') }}');
-                background-size: cover;
-                background-position: center;
-                /* animation: overlayFade 3s ease-in-out infinite alternate; */
+                right: 0;
+                height: 1px;
+                background: #e0e0e0;
             }
 
-            @keyframes overlayFade {
-                0% {
-                    opacity: 0.7;
+            .divider span {
+                position: relative;
+                background: white;
+                padding: 0 10px;
+            }
+
+            .tab-buttons {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+
+            .tab-btn {
+                flex: 1;
+                padding: 12px;
+                border: 2px solid #e0e0e0;
+                background: white;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                color: #666;
+            }
+
+            .tab-btn.active {
+                border-color: #667eea;
+                background: #f0f4ff;
+                color: #667eea;
+            }
+
+            .tab-btn.admin {
+                border-color: #f5576c;
+            }
+
+            .tab-btn.admin.active {
+                border-color: #f5576c;
+                background: #fff5f7;
+                color: #f5576c;
+            }
+
+            .form-section {
+                display: none;
+            }
+
+            .form-section.active {
+                display: block;
+            }
+
+            .login-image {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .login-image::before {
+                content: '';
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                top: -100px;
+                right: -100px;
+            }
+
+            .login-image::after {
+                content: '';
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 50%;
+                bottom: -80px;
+                left: -80px;
+            }
+
+            .image-content {
+                position: relative;
+                z-index: 2;
+                text-align: center;
+            }
+
+            .image-content i {
+                font-size: 80px;
+                margin-bottom: 20px;
+                display: block;
+            }
+
+            .image-content h2 {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+
+            .image-content p {
+                font-size: 16px;
+                line-height: 1.6;
+                opacity: 0.9;
+            }
+
+            .error-message {
+                color: #f5576c;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            .success-message {
+                background: #d4edda;
+                color: #155724;
+                padding: 12px 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+
+            @media (max-width: 768px) {
+                .login-wrapper {
+                    grid-template-columns: 1fr;
                 }
-                100% {
-                    opacity: 0.9;
+
+                .login-image {
+                    display: none;
                 }
-            }
-            .feature-icon {
-                font-size: 2.5rem;
-                color: #1e88e5;
-            }
-            .navbar-active {
-                color: #1e88e5;
-                border-bottom: 2px solid #1e88e5;
-            }
-            .content-section {
-                background-color: rgba(255, 255, 255, 0.95);
-                border-radius: 12px;
-                padding: 2rem;
-                margin: 1rem;
-                
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            }
-            .hero-text {
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            }
-            .hero-description {
-                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-            }
-            .section-title {
-                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-            }
-            .section-description {
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            }
-            .card-title {
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            }
-            .feature-text {
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+
+                .login-section {
+                    padding: 40px 20px;
+                }
             }
         </style>
     </head>
 
-    <section class="hero-section relative flex items-center">
-        <div class="container mx-auto px-6 z-10 text-center md:text-left">
-            <div class="md:w-2/3">
-                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight hero-text">Transformez l'éducation avec une gestion intelligente des formations</h1>
-                <p class="mt-4 text-xl text-gray-200 hero-description">Suivi pédagogique en temps réel, gestion des inscriptions et analyse de performance pour maximiser la réussite de vos étudiants.</p>
-                <div class="mt-8 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center md:justify-start">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="btn-primary text-center py-3 px-6 rounded-md text-lg font-medium hover:bg-blue-700">Accéder au tableau de bord</a>
-                    @else
-                        <a href="{{ route('register') }}" class="btn-primary text-center py-3 px-6 rounded-md text-lg font-medium hover:bg-blue-700">Commencer maintenant</a>
-                    @endauth
-                    <a href="{{ route('about') }}" class="bg-white text-blue-600 text-center py-3 px-6 rounded-md text-lg font-medium hover:bg-gray-100">En savoir plus</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <body>
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-wrapper">
+                    <div class="login-section">
+                        <div class="login-header">
+                            <img src="{{ asset('images/logo-crefer.png') }}" alt="Logo CREFER">
+                            <h1>CREFER</h1>
+                            <p>Plateforme de gestion des formations</p>
+                        </div>
 
-    <section class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="content-section">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 section-title">Pourquoi choisir CREFER ?</h2>
-                    <p class="mt-4 text-xl text-gray-600 section-description">Une solution complète pour optimiser la gestion de vos formations et étudiants</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="card bg-white p-8 text-center">
-                        <div class="mb-4">
-                            <i class="fas fa-chart-line feature-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Suivi en temps réel</h3>
-                        <p class="text-gray-600 feature-text">Visualisez la progression de vos étudiants et accédez à des statistiques détaillées sur les formations.</p>
-                    </div>
-                    
-                    <div class="card bg-white p-8 text-center">
-                        <div class="mb-4">
-                            <i class="fas fa-tools feature-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Gestion pédagogique</h3>
-                        <p class="text-gray-600 feature-text">Organisez les cours, gérez les inscriptions et suivez l'assiduité pour une meilleure efficacité pédagogique.</p>
-                    </div>
-                    
-                    <div class="card bg-white p-8 text-center">
-                        <div class="mb-4">
-                            <i class="fas fa-sun feature-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2 card-title">Analyses détaillées</h3>
-                        <p class="text-gray-600 feature-text">Obtenez des rapports complets sur la réussite des formations et les performances de vos étudiants.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="fonctionnalites" class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="content-section">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 section-title">Fonctionnalités adaptées à chaque profil</h2>
-                    <p class="mt-4 text-xl text-gray-600 section-description">Une solution polyvalente pour tous les acteurs du secteur éducatif</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="card bg-white">
-                        <div class="p-6 solar-gradient">
-                            <h3 class="text-2xl font-bold text-white">Étudiant</h3>
-                        </div>
-                        <div class="p-6">
-                            <ul class="space-y-3">
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Suivi de vos formations</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Consultation des cours</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Mes inscriptions</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Tableau de bord personnel</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Accès aux ressources</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Téléchargement de certificats</span>
-                                </li>
-                            </ul>
-                            <div class="mt-6">
-                                <a href="{{ route('register') }}" class="btn-primary block text-center">S'inscrire</a>
+                        <!-- Session Status -->
+                        @if (session('status'))
+                            <div class="success-message">
+                                {{ session('status') }}
                             </div>
+                        @endif
+
+                        <!-- Tab Buttons -->
+                        <div class="tab-buttons">
+                            <button type="button" class="tab-btn active enseignant-tab" onclick="switchTab('enseignant')">
+                                <i class="fas fa-chalkboard-user"></i> Enseignant
+                            </button>
+                            <button type="button" class="tab-btn admin admin-tab" onclick="switchTab('admin')">
+                                <i class="fas fa-shield-alt"></i> Admin
+                            </button>
                         </div>
-                    </div>
-                    
-                    <div class="card bg-white">
-                        <div class="p-6 solar-gradient">
-                            <h3 class="text-2xl font-bold text-white">Formateur</h3>
-                        </div>
-                        <div class="p-6">
-                            <ul class="space-y-3">
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Gestion des cours et contenus</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Suivi des étudiants</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Gestion des présences</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Évaluation des performances</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Communications avec étudiants</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Générations de rapports</span>
-                                </li>
-                            </ul>
-                            <div class="mt-6">
-                                <a href="{{ route('contact') }}" class="btn-primary block text-center">Nous contacter</a>
+
+                        <!-- Enseignant Login Form -->
+                        <div class="form-section active" id="enseignant-form">
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="email_enseignant">Email</label>
+                                    <input type="email" id="email_enseignant" name="email" value="{{ old('email') }}" required autofocus>
+                                    @error('email')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password_enseignant">Mot de passe</label>
+                                    <input type="password" id="password_enseignant" name="password" required>
+                                    @error('password')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="remember-me">
+                                    <input type="checkbox" id="remember_enseignant" name="remember">
+                                    <label for="remember_enseignant" style="margin: 0; color: #666;">Se souvenir de moi</label>
+                                </div>
+
+                                <button type="submit" class="submit-btn enseignant-btn">
+                                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                                </button>
+                            </form>
+
+                            <div class="divider">
+                                <span>Pas encore inscrit ?</span>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card bg-white">
-                        <div class="p-6 solar-gradient">
-                            <h3 class="text-2xl font-bold text-white">Administrateur</h3>
-                        </div>
-                        <div class="p-6">
-                            <ul class="space-y-3">
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Tableau de bord global</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Gestion des utilisateurs</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Gestion des formations</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Statistiques avancées</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Rapports analytiques</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <i class="fas fa-check text-green-500 mr-2"></i>
-                                    <span>Configuration système</span>
-                                </li>
-                            </ul>
-                            <div class="mt-6">
-                                <a href="{{ route('contact') }}" class="btn-primary block text-center">Nous contacter</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800">Témoignages de nos utilisateurs</h2>
-                <p class="mt-4 text-xl text-gray-600">Ce que nos utilisateurs disent de CREFER</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="card bg-white p-8">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            <a href="{{ route('register') }}" class="submit-btn" style="text-align: center; background: #f0f4ff; color: #667eea; text-decoration: none; display: block;">
+                                <i class="fas fa-user-plus"></i> Créer un compte enseignant
+                            </a>
+                        </div>
+
+                        <!-- Admin Login Form -->
+                        <div class="form-section" id="admin-form">
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="email_admin">Email administrateur</label>
+                                    <input type="email" id="email_admin" name="email" value="{{ old('email') }}" required>
+                                    @error('email')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password_admin">Mot de passe</label>
+                                    <input type="password" id="password_admin" name="password" required>
+                                    @error('password')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="remember-me">
+                                    <input type="checkbox" id="remember_admin" name="remember">
+                                    <label for="remember_admin" style="margin: 0; color: #666;">Se souvenir de moi</label>
+                                </div>
+
+                                <button type="submit" class="submit-btn admin-btn">
+                                    <i class="fas fa-sign-in-alt"></i> Se connecter en tant qu'Admin
+                                </button>
+                            </form>
+
+                            <p style="text-align: center; margin-top: 20px; color: #999; font-size: 14px;">
+                                Seuls les administrateurs autorisés peuvent accéder
+                            </p>
                         </div>
                     </div>
-                    <p class="text-gray-600 italic">"Grâce à CREFER, la gestion de mes formations a devenu beaucoup plus simple. Je peux suivre facilement la progression de chaque étudiant et générer des rapports détaillés en quelques clics."</p>
-                    <div class="mt-6 flex items-center">
-                        <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xl font-bold">JD</div>
-                        <div class="ml-4">
-                            <p class="font-semibold">AFANKOUDTCHE Jean</p>
-                            <p class="text-sm text-gray-500">Formateur Principal</p>
+
+                    <div class="login-image">
+                        <div class="image-content enseignant-content" id="image-content-enseignant">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h2>Enseignants</h2>
+                            <p>Gérez vos formations et suivez vos étudiants en temps réel</p>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="card bg-white p-8">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">"En tant que coordinatrice, CREFER me permet de gérer efficacement plusieurs formations en parallèle. Les alertes et notifications me tiennent informée de chaque événement important."</p>
-                    <div class="mt-6 flex items-center">
-                        <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xl font-bold">ML</div>
-                        <div class="ml-4">
-                            <p class="font-semibold">Justine DJESSOU</p>
-                            <p class="text-sm text-gray-500">Coordinatrice Pédagogique</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card bg-white p-8">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">"Notre établissement gère plus de 20 formations et CREFER nous a permis de centraliser toutes les données. Les tableaux de bord et rapports automatiques nous font gagner un temps précieux."</p>
-                    <div class="mt-6 flex items-center">
-                        <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xl font-bold">PG</div>
-                        <div class="ml-4">
-                            <p class="font-semibold">Dorian AHONDO</p>
-                            <p class="text-sm text-gray-500">Directeur Pédagogique</p>
+                        <div class="image-content" style="display: none;" id="image-content-admin">
+                            <i class="fas fa-cogs"></i>
+                            <h2>Administrateurs</h2>
+                            <p>Contrôlez et supervisez toute la plateforme</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section class="py-16 bg-blue-600 text-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-6">Prêt à optimiser la gestion de vos formations ?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Rejoignez les établissements qui font confiance à CREFER pour améliorer la qualité pédagogique et simplifier la gestion de leurs formations.</p>
-            <a href="{{ route('register') }}" class="bg-white text-blue-600 py-3 px-8 rounded-md text-lg font-medium hover:bg-gray-100 transition duration-300">Créer un compte gratuitement</a>
-        </div>
-    </section>
-
-    <script>
-        // Attendre que le DOM soit complètement chargé
-        document.addEventListener('DOMContentLoaded', function() {
-            // Vérifier que les éléments canvas existent
-            const dailyProductionCanvas = document.getElementById('dailyProductionChart');
-            const comparisonCanvas = document.getElementById('comparisonChart');
-            const monthlyPerformanceCanvas = document.getElementById('monthlyPerformanceChart');
-
-            if (!dailyProductionCanvas || !comparisonCanvas || !monthlyPerformanceCanvas) {
-                console.error('Un ou plusieurs éléments canvas sont manquants');
-                return;
-            }
-
-            // Fonction pour générer des données aléatoires basées sur l'heure
-            function generateHourlyData(baseData, variance) {
-                const hour = new Date().getHours();
-                const newData = [...baseData];
-                // Ajout d'une variation aléatoire pour l'heure actuelle
-                newData[hour] = Math.max(0, baseData[hour] + (Math.random() - 0.5) * variance);
-                return newData;
-            }
-
-            // Données de base
-            const togoBaseData = [0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.5, 1.8, 3.2, 4.5, 5.4, 5.8, 5.9, 5.7, 5.2, 4.3, 3.1, 1.9, 0.7, 0.2, 0.0, 0.0, 0.0, 0.0];
-            const worldBaseData = [0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.8, 2.1, 3.8, 5.2, 6.1, 6.5, 6.7, 6.4, 5.8, 4.9, 3.7, 2.3, 1.1, 0.4, 0.1, 0.0, 0.0, 0.0];
-
-            // Configuration globale de Chart.js
-            Chart.defaults.font.family = "'Poppins', sans-serif";
-            Chart.defaults.font.size = 12;
-            Chart.defaults.color = '#666';
-
-            // Initialiser les graphiques
-            // Graphique de production journalière
-            const dailyProductionCtx = dailyProductionCanvas.getContext('2d');
-            const dailyProductionChart = new Chart(dailyProductionCtx, {
-                type: 'line',
-                data: {
-                    labels: ['00h', '01h', '02h', '03h', '04h', '05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h'],
-                    datasets: [{
-                        label: 'Production Togo (kW)',
-                        data: togoBaseData,
-                        borderColor: '#FFA500',
-                        backgroundColor: 'rgba(255, 165, 0, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Moyenne Mondiale (kW)',
-                        data: worldBaseData,
-                        borderColor: '#0000FF',
-                        backgroundColor: 'rgba(0, 0, 255, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Puissance (kW)'
-                            },
-                            suggestedMax: 7
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Heure'
-                            }
-                        }
-                    },
-                    interaction: {
-                        mode: 'nearest',
-                        axis: 'x',
-                        intersect: false
-                    }
-                }
-            });
-
-            // Fonction de mise à jour du graphique
-            function updateChart() {
-                const currentHour = new Date().getHours();
-                const currentMinute = new Date().getMinutes();
-                
-                // Mettre à jour les données avec une variation aléatoire
-                dailyProductionChart.data.datasets[0].data = generateHourlyData(togoBaseData, 0.8);
-                dailyProductionChart.data.datasets[1].data = generateHourlyData(worldBaseData, 0.5);
-                
-                // Ajouter un indicateur visuel de l'heure actuelle
-                dailyProductionChart.options.plugins.annotation = {
-                    annotations: {
-                        currentTime: {
-                            type: 'line',
-                            xMin: currentHour,
-                            xMax: currentHour,
-                            borderColor: 'rgba(255, 0, 0, 0.5)',
-                            borderWidth: 2,
-                            label: {
-                                content: 'Heure actuelle',
-                                enabled: true
-                            }
-                        }
-                    }
-                };
-                
-                // Mettre à jour le graphique
-                dailyProductionChart.update();
-                
-                // Afficher l'heure de la dernière mise à jour
-                const updateTime = document.getElementById('lastUpdate');
-                if (updateTime) {
-                    updateTime.textContent = `Dernière mise à jour : ${currentHour}h${currentMinute.toString().padStart(2, '0')}`;
-                }
-            }
-
-            // Mettre à jour immédiatement et toutes les heures
-            updateChart();
-            setInterval(updateChart, 3600000); // 3600000 ms = 1 heure
-
-            // Mise à jour plus fréquente pour la démo (toutes les 30 secondes)
-            setInterval(() => {
-                const now = new Date();
-                if (now.getSeconds() === 0 || now.getSeconds() === 30) {
-                    updateChart();
-                }
-            }, 1000);
-
-            // Données de base pour la comparaison Production vs Consommation
-            const productionBaseData = {
-                'Lundi': 28,
-                'Mardi': 32,
-                'Mercredi': 35,
-                'Jeudi': 27,
-                'Vendredi': 30,
-                'Samedi': 25,
-                'Dimanche': 22
-            };
-
-            const consommationBaseData = {
-                'Lundi': 22,
-                'Mardi': 24,
-                'Mercredi': 25,
-                'Jeudi': 26,
-                'Vendredi': 23,
-                'Samedi': 30,
-                'Dimanche': 28
-            };
-
-            // Fonction pour générer des variations aléatoires
-            function generateDailyVariation(baseValue, variance) {
-                return Math.max(0, baseValue + (Math.random() - 0.5) * variance);
-            }
-
-            // Fonction pour obtenir le jour de la semaine en français
-            function getFrenchDayOfWeek(date) {
-                const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-                return days[date.getDay()];
-            }
-
-            // Graphique de comparaison production vs consommation
-            const comparisonCtx = comparisonCanvas.getContext('2d');
-            const comparisonChart = new Chart(comparisonCtx, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(productionBaseData),
-                    datasets: [
-                        {
-                            label: 'Production (kWh)',
-                            data: Object.values(productionBaseData),
-                            backgroundColor: 'rgba(30, 136, 229, 0.8)',
-                        },
-                        {
-                            label: 'Consommation (kWh)',
-                            data: Object.values(consommationBaseData),
-                            backgroundColor: 'rgba(255, 152, 0, 0.8)',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Énergie (kWh)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Jour'
-                            }
-                        }
-                    }
-                });
-
-            // Fonction de mise à jour du graphique de comparaison
-            function updateComparisonChart() {
-                const currentDay = getFrenchDayOfWeek(new Date());
-                const currentHour = new Date().getHours();
-                const currentMinute = new Date().getMinutes();
-
-                // Mettre à jour les données avec des variations
-                comparisonChart.data.datasets[0].data = Object.keys(productionBaseData).map(day => {
-                    const baseValue = productionBaseData[day];
-                    return day === currentDay ? generateDailyVariation(baseValue, 6) : baseValue;
-                });
-
-                comparisonChart.data.datasets[1].data = Object.keys(consommationBaseData).map(day => {
-                    const baseValue = consommationBaseData[day];
-                    return day === currentDay ? generateDailyVariation(baseValue, 4) : baseValue;
-                });
-
-                // Mettre en évidence le jour actuel
-                comparisonChart.data.datasets.forEach(dataset => {
-                    dataset.backgroundColor = Object.keys(productionBaseData).map(day => 
-                        day === currentDay 
-                            ? (dataset.label.includes('Production') ? 'rgba(30, 136, 229, 1)' : 'rgba(255, 152, 0, 1)')
-                            : (dataset.label.includes('Production') ? 'rgba(30, 136, 229, 0.6)' : 'rgba(255, 152, 0, 0.6)')
-                    );
-                });
-
-                // Mettre à jour le graphique
-                comparisonChart.update();
-
-                // Afficher l'heure de la dernière mise à jour
-                const updateTimeComparison = document.getElementById('lastUpdateComparison');
-                if (updateTimeComparison) {
-                    updateTimeComparison.textContent = `Dernière mise à jour : ${currentHour}h${currentMinute.toString().padStart(2, '0')}`;
-                }
-            }
-
-            // Mettre à jour immédiatement et toutes les heures
-            updateComparisonChart();
-            setInterval(updateComparisonChart, 3600000); // 3600000 ms = 1 heure
-
-            // Mise à jour plus fréquente pour la démo (toutes les 30 secondes)
-            setInterval(() => {
-                const now = new Date();
-                if (now.getSeconds() === 0 || now.getSeconds() === 30) {
-                    updateComparisonChart();
-                }
-            }, 1000);
-
-            // Graphique de performance mensuelle
-            const monthlyPerformanceCtx = monthlyPerformanceCanvas.getContext('2d');
-            const monthlyPerformanceChart = new Chart(monthlyPerformanceCtx, {
-                type: 'radar',
-                data: {
-                    labels: ['Production', 'Efficacité', 'Maintenance', 'Météo', 'Rendement'],
-                    datasets: [{
-                        label: 'Performance',
-                        data: [85, 90, 75, 80, 88],
-                        backgroundColor: 'rgba(30, 136, 229, 0.2)',
-                        borderColor: '#1e88e5',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#1e88e5',
-                        pointBorderColor: '#fff',
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: '#1e88e5',
-                        pointHoverBorderColor: '#fff',
-                        pointHitRadius: 10,
-                        pointBorderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    },
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                stepSize: 20
-                            }
-                        }
-                    }
-                });
-        });
-
-    </script>        <!-- Scripts pour les graphiques -->
-    <script>
-        // Attendre que le DOM soit chargé
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof Chart === 'undefined') {
-                console.error('Chart.js n\'est pas chargé');
-                return;
-            }
-
-            // Initialiser les graphiques
-            initializeCharts();
-            
-            // Mettre à jour les graphiques périodiquement
-            setInterval(updateCharts, 30000);
-        });
-    </script>
-
-        <!-- Bouton WhatsApp flottant -->
+        <!-- WhatsApp Button -->
         <a href="https://wa.me/+22897734381" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
             <i class="fab fa-whatsapp"></i>
         </a>
@@ -727,28 +418,52 @@
         <style>
             .whatsapp-float {
                 position: fixed;
-            bottom: 40px;
-            right: 40px;
-            background-color: #25d366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 3px rgba(0,0,0,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
+                bottom: 40px;
+                right: 40px;
+                background-color: #25d366;
+                color: white;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 30px;
+                box-shadow: 2px 2px 3px rgba(0,0,0,0.25);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                z-index: 100;
+            }
 
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            color: white;
-            transform: scale(1.1);
-        }
-    </style>
+            .whatsapp-float:hover {
+                background-color: #128C7E;
+                transform: scale(1.1);
+            }
+        </style>
+
+        <script>
+            function switchTab(tab) {
+                // Hide all forms and update buttons
+                document.getElementById('enseignant-form').classList.remove('active');
+                document.getElementById('admin-form').classList.remove('active');
+                document.querySelector('.enseignant-tab').classList.remove('active');
+                document.querySelector('.admin-tab').classList.remove('active');
+
+                // Hide all image contents
+                document.getElementById('image-content-enseignant').style.display = 'none';
+                document.getElementById('image-content-admin').style.display = 'none';
+
+                // Show selected tab
+                if (tab === 'enseignant') {
+                    document.getElementById('enseignant-form').classList.add('active');
+                    document.querySelector('.enseignant-tab').classList.add('active');
+                    document.getElementById('image-content-enseignant').style.display = 'block';
+                } else if (tab === 'admin') {
+                    document.getElementById('admin-form').classList.add('active');
+                    document.querySelector('.admin-tab').classList.add('active');
+                    document.getElementById('image-content-admin').style.display = 'block';
+                }
+            }
+        </script>
+    </body>
 </x-app-layout>

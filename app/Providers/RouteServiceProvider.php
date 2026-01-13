@@ -28,6 +28,14 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
 
+        // Bindings implicites pour les modèles avec clés primaires personnalisées
+        Route::model('student', \App\Models\Student::class);
+        Route::model('professor', \App\Models\Professor::class);
+        Route::model('classroom', \App\Models\Classroom::class);
+        Route::model('course', \App\Models\Course::class);
+        Route::model('enrollment', \App\Models\Enrollment::class);
+        Route::model('attendance', \App\Models\Attendance::class);
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

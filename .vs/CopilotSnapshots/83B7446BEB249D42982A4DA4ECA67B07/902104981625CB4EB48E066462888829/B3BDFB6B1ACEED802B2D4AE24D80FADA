@@ -1,0 +1,471 @@
+﻿<!-- resources/views/home.blade.php -->
+<x-app-layout>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CREFER - Connexion</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+        
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+            }
+
+            .login-container {
+                display: flex;
+                min-height: 100vh;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .login-card {
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+                max-width: 1000px;
+                width: 100%;
+            }
+
+            .login-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .login-section {
+                padding: 50px 40px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .login-header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .login-header img {
+                height: 60px;
+                margin: 0 auto 20px;
+            }
+
+            .login-header h1 {
+                font-size: 28px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .login-header p {
+                color: #666;
+                font-size: 14px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: #333;
+                font-size: 14px;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+
+            .form-group input:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+
+            .remember-me {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+
+            .remember-me input {
+                margin-right: 8px;
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+            .submit-btn {
+                width: 100%;
+                padding: 12px;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: white;
+            }
+
+            .enseignant-btn {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+
+            .enseignant-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            }
+
+            .admin-btn {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            }
+
+            .admin-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+            }
+
+            .divider {
+                text-align: center;
+                margin: 30px 0;
+                position: relative;
+                color: #999;
+                font-size: 14px;
+            }
+
+            .divider::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: #e0e0e0;
+            }
+
+            .divider span {
+                position: relative;
+                background: white;
+                padding: 0 10px;
+            }
+
+            .tab-buttons {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+
+            .tab-btn {
+                flex: 1;
+                padding: 12px;
+                border: 2px solid #e0e0e0;
+                background: white;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                color: #666;
+            }
+
+            .tab-btn.active {
+                border-color: #667eea;
+                background: #f0f4ff;
+                color: #667eea;
+            }
+
+            .tab-btn.admin {
+                border-color: #f5576c;
+            }
+
+            .tab-btn.admin.active {
+                border-color: #f5576c;
+                background: #fff5f7;
+                color: #f5576c;
+            }
+
+            .form-section {
+                display: none;
+            }
+
+            .form-section.active {
+                display: block;
+            }
+
+            .login-image {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .login-image::before {
+                content: '';
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                top: -100px;
+                right: -100px;
+            }
+
+            .login-image::after {
+                content: '';
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 50%;
+                bottom: -80px;
+                left: -80px;
+            }
+
+            .image-content {
+                position: relative;
+                z-index: 2;
+                text-align: center;
+            }
+
+            .image-content i {
+                font-size: 80px;
+                margin-bottom: 20px;
+                display: block;
+            }
+
+            .image-content h2 {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+
+            .image-content p {
+                font-size: 16px;
+                line-height: 1.6;
+                opacity: 0.9;
+            }
+
+            .error-message {
+                color: #f5576c;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            .success-message {
+                background: #d4edda;
+                color: #155724;
+                padding: 12px 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+
+            @media (max-width: 768px) {
+                .login-wrapper {
+                    grid-template-columns: 1fr;
+                }
+
+                .login-image {
+                    display: none;
+                }
+
+                .login-section {
+                    padding: 40px 20px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-wrapper">
+                    <div class="login-section">
+                        <div class="login-header">
+                            <img src="{{ asset('images/logo-crefer.png') }}" alt="Logo CREFER">
+                            <h1>CREFER</h1>
+                            <p>Plateforme de gestion des formations</p>
+                        </div>
+
+                        <!-- Session Status -->
+                        @if (session('status'))
+                            <div class="success-message">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        <!-- Tab Buttons -->
+                        <div class="tab-buttons">
+                            <button type="button" class="tab-btn active enseignant-tab" onclick="switchTab('enseignant')">
+                                <i class="fas fa-chalkboard-user"></i> Enseignant
+                            </button>
+                            <button type="button" class="tab-btn admin admin-tab" onclick="switchTab('admin')">
+                                <i class="fas fa-shield-alt"></i> Admin
+                            </button>
+                        </div>
+
+                        <!-- Enseignant Login Form -->
+                        <div class="form-section active" id="enseignant-form">
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="email_enseignant">Email</label>
+                                    <input type="email" id="email_enseignant" name="email" value="{{ old('email') }}" required autofocus>
+                                    @error('email')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password_enseignant">Mot de passe</label>
+                                    <input type="password" id="password_enseignant" name="password" required>
+                                    @error('password')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="remember-me">
+                                    <input type="checkbox" id="remember_enseignant" name="remember">
+                                    <label for="remember_enseignant" style="margin: 0; color: #666;">Se souvenir de moi</label>
+                                </div>
+
+                                <button type="submit" class="submit-btn enseignant-btn">
+                                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                                </button>
+                            </form>
+
+                            <div class="divider">
+                                <span>Pas encore inscrit ?</span>
+                            </div>
+
+                            <a href="{{ route('register') }}" class="submit-btn" style="text-align: center; background: #f0f4ff; color: #667eea; text-decoration: none; display: block;">
+                                <i class="fas fa-user-plus"></i> Créer un compte enseignant
+                            </a>
+                        </div>
+
+                        <!-- Admin Login Form -->
+                        <div class="form-section" id="admin-form">
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <input type="hidden" name="role" value="admin">
+
+                                <div class="form-group">
+                                    <label for="email_admin">Email administrateur</label>
+                                    <input type="email" id="email_admin" name="email" value="{{ old('email') }}" required>
+                                    @error('email')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password_admin">Mot de passe</label>
+                                    <input type="password" id="password_admin" name="password" required>
+                                    @error('password')
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="remember-me">
+                                    <input type="checkbox" id="remember_admin" name="remember">
+                                    <label for="remember_admin" style="margin: 0; color: #666;">Se souvenir de moi</label>
+                                </div>
+
+                                <button type="submit" class="submit-btn admin-btn">
+                                    <i class="fas fa-sign-in-alt"></i> Se connecter en tant qu'Admin
+                                </button>
+                            </form>
+
+                            <p style="text-align: center; margin-top: 20px; color: #999; font-size: 14px;">
+                                Seuls les administrateurs autorisés peuvent accéder
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="login-image">
+                        <div class="image-content enseignant-content" id="image-content-enseignant">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h2>Enseignants</h2>
+                            <p>Gérez vos formations et suivez vos étudiants en temps réel</p>
+                        </div>
+                        <div class="image-content" style="display: none;" id="image-content-admin">
+                            <i class="fas fa-cogs"></i>
+                            <h2>Administrateurs</h2>
+                            <p>Contrôlez et supervisez toute la plateforme</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/+22897734381" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <style>
+            .whatsapp-float {
+                position: fixed;
+                bottom: 40px;
+                right: 40px;
+                background-color: #25d366;
+                color: white;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 30px;
+                box-shadow: 2px 2px 3px rgba(0,0,0,0.25);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                z-index: 100;
+            }
+
+            .whatsapp-float:hover {
+                background-color: #128C7E;
+                transform: scale(1.1);
+            }
+        </style>
+
+        <script>
+            function switchTab(tab) {
+                // Hide all forms and update buttons
+                document.getElementById('enseignant-form').classList.remove('active');
+                document.getElementById('admin-form').classList.remove('active');
+                document.querySelector('.enseignant-tab').classList.remove('active');
+                document.querySelector('.admin-tab').classList.remove('active');
+
+                // Hide all image contents
+                document.getElementById('image-content-enseignant').style.display = 'none';
+                document.getElementById('image-content-admin').style.display = 'none';
+
+                // Show selected tab
+                if (tab === 'enseignant') {
+                    document.getElementById('enseignant-form').classList.add('active');
+                    document.querySelector('.enseignant-tab').classList.add('active');
+                    document.getElementById('image-content-enseignant').style.display = 'block';
+                } else if (tab === 'admin') {
+                    document.getElementById('admin-form').classList.add('active');
+                    document.querySelector('.admin-tab').classList.add('active');
+                    document.getElementById('image-content-admin').style.display = 'block';
+                }
+            }
+        </script>
+    </body>
+</x-app-layout>

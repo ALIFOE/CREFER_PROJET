@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('home');
     }
 
     /**
@@ -29,7 +29,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Rediriger selon le rôle de l'utilisateur détecté automatiquement
+        $user = Auth::user();
+        
+        return match($user->role) {
+            'admin' => redirect()->intended('/admin/dashboard'),
+            'professor' => redirect()->intended('/professor/dashboard'),
+            'student' => redirect()->intended('/student/dashboard'),
+            default => redirect()->intended(RouteServiceProvider::HOME)
+        };
     }
 
     /**

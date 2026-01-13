@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
             MaintenanceTaskSeeder::class,
             DonneeMeteoSeeder::class,
             FormationsTableSeeder::class,
-            ServicesTableSeeder::class,
             MediaSeeder::class
         ]);
     }

@@ -1,0 +1,56 @@
+﻿@echo off
+REM Script Batch pour créer les utilisateurs test CREFER
+REM Fonctionne uniquement sur Windows
+
+title CREFER - Creation des Utilisateurs Test
+color 0A
+
+echo.
+echo ╔════════════════════════════════════════════════════════╗
+echo ║   CREFER - Creation des Utilisateurs Test              ║
+echo ╚════════════════════════════════════════════════════════╝
+echo.
+
+REM Verifier que PHP est installe
+php --version >nul 2>&1
+if errorlevel 1 (
+    echo [X] PHP n'est pas installe ou n'est pas dans le PATH
+    pause
+    exit /b 1
+)
+
+echo [OK] PHP trouve
+echo.
+
+REM Verifier que nous sommes dans le bon repertoire
+if not exist "create-users.php" (
+    echo [X] Fichier create-users.php non trouve
+    echo. 
+    echo Veuillez executer ce script depuis la racine du projet
+    pause
+    exit /b 1
+)
+
+echo [OK] Repertoire correct
+echo.
+
+REM Executer le script PHP
+echo [*] Execution du script de creation d'utilisateurs...
+echo.
+
+php create-users.php
+
+if errorlevel 1 (
+    echo.
+    echo [X] Erreur lors de la creation des utilisateurs
+    pause
+    exit /b 1
+)
+
+echo.
+echo [OK] Utilisateurs crees avec succes!
+echo.
+echo Consultez CREATE_USERS_GUIDE.md pour plus de details
+echo.
+pause
+exit /b 0

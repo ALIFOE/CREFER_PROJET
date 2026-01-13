@@ -1,0 +1,58 @@
+﻿# 🎯 GUIDE ULTRA-RAPIDE - Créer les Utilisateurs
+
+## ⚡ En 30 Secondes
+
+### 1. Commande
+```bash
+php artisan users:create-test
+```
+
+### 2. Résultat
+```
+✅ Enseignant créé: enseignant@test.com / password
+✅ Admin créé: admin@test.com / password
+```
+
+### 3. Lancer le Serveur
+```bash
+php artisan serve
+```
+
+### 4. Aller à
+```
+http://localhost:8000
+```
+
+### 5. Se Connecter
+- Enseignant: `enseignant@test.com` / `password`
+- Admin: `admin@test.com` / `password`
+
+---
+
+## 📋 Identifiants Rapides
+
+| Rôle | Email | Password | Onglet |
+|------|-------|----------|--------|
+| Enseignant | `enseignant@test.com` | `password` | "Enseignant" |
+| Admin | `admin@test.com` | `password` | "Admin" |
+
+---
+
+## 🚀 4 Façons de Créer
+
+| Méthode | Commande | Plateforme |
+|---------|----------|-----------|
+| **Artisan** | `php artisan users:create-test` | Tous |
+| **PHP** | `php create-users.php` | Tous |
+| **PowerShell** | `.\create-users.ps1` | Windows |
+| **Batch** | `create-users.bat` | Windows |
+
+---
+
+## ✅ C'est Fait!
+
+Vous avez maintenant les identifiants pour tester les deux dashboards! 🎉
+
+---
+
+**Plus d'infos**: Voir `IDENTIFIANTS.md` ou `CREATE_USERS_GUIDE.md`
